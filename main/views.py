@@ -8,7 +8,7 @@ from main.models import User
 
 def home(request):
     user = request.user
-    user.reqcount += 1
+    user.reqCount += 1
     user.save()
     return render(request,'main/home.html')
 
