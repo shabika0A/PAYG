@@ -20,5 +20,4 @@ class User(AbstractUser):
 
         
         self.totalCost = User.costPerReq * self.reqCount
-        # print("saved")
         super().save(*args, **kwargs)

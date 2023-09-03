@@ -4,13 +4,18 @@ from django.contrib.auth import login,logout,authenticate
 from django.shortcuts import render
 #from django.contrib.auth.models import User
 from main.models import User
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
-    user = request.user
-    user.reqCount += 1
-    user.save()
-    return render(request,'main/home.html')
+    if request.user.is_authenticated:
+        user = request.user
+        user.reqCount += 1
+        user.save()
+        return render(request,'main/home.html')
+    else:
+        return redirect('/login')
+
 
 def sign_up(request):
     if request.method =='POST':
@@ -33,8 +38,6 @@ from rest_framework import permissions, status,serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import CostSerializer  
-# from .models import User  # Import your User model
-# from rest_framework import  # Create a serializer for the response
 
 class CostAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
